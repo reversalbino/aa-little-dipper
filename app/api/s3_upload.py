@@ -9,7 +9,6 @@ s3_routes = Blueprint('s3_routes', __name__)
 
 @s3_routes.route('/upload/', methods=['POST'])
 def upload_image():
-
     if 'file' not in request.files:
         return jsonify('not working')
 
@@ -28,10 +27,7 @@ def upload_image():
     )
 
     uploadFile = {'file': (OBJECT_NAME, file)}
-    # print('\n\n\n', uploadFile, '\n\n\n')
     requests.post(response['url'], data=response['fields'], files=uploadFile)
     url = response['url'] + response['fields']['key']
-
-    print(response)
 
     return jsonify(url)

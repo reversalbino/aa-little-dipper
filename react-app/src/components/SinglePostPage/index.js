@@ -9,6 +9,8 @@ import defaultProfileImage from '../../static/default-profile-image.png';
 import CommentsSection from '../CommentsSection';
 import AddCommentForm from '../AddCommentForm';
 import CommentsList from '../CommentsList';
+import TagsSection from '../TagsSection';
+import AddTagForm from '../AddTagForm';
 
 export default function SinglePostPage() {
     const dispatch = useDispatch();
@@ -34,16 +36,13 @@ export default function SinglePostPage() {
     useEffect(() => {
         (async () => {
             await dispatch(imageActions.getImage(+id));
-            // if(!image) {
-            //     history.push('/404');
-            // }
             setIsLoaded(true);
         })()
     }, [dispatch, id]);
 
     async function saveNewTitle() {
         if(newTitle === undefined) {
-
+            return;
         }
 
         if(newTitle.length > 50) {
@@ -122,11 +121,17 @@ export default function SinglePostPage() {
                     </div>
                 }
             </div>
-            <div id='comments-section'>
-                {/* <CommentsSection /> */}
-                <h1>Comments</h1>
-                <AddCommentForm post={post} />
-                <CommentsList comments={comments} />
+            <div id='tags-and-comments-section'>
+                <div id='tags-section'>
+                    <h1>Tags</h1>
+                    {sessionUser.id === post.userId &&  <AddTagForm tags={Object.values(post?.tags)} postId={id} /> }
+                    <TagsSection tags={Object.values(post?.tags)} postId={id} sameUser={sessionUser.id === post.userId} />
+                </div>
+                <div id='comments-section'>
+                    <h1>Comments</h1>
+                    <AddCommentForm post={post} />
+                    <CommentsList comments={comments} />
+                </div>
             </div>
         </div>
 }

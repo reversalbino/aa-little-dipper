@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, session, redirect, url_for, request, jsonify
-from app.forms import CreatePostForm, EditPostForm
-from app.models import db, Post
+from app.forms import CreatePostForm, EditPostForm, CreateTagForm
+from app.models import db, Post, Tag
 from app.api.utils import validation_errors_to_error_messages
 from sqlalchemy import desc
 
@@ -10,7 +10,6 @@ images_routes = Blueprint('images', __name__)
 @images_routes.route('/')
 def get_images():
     posts = Post.query.order_by(desc(Post.createdAt)).all()
-    print('\n\n', posts, '\n\n')
 
     posts = [post.to_dict_lite() for post in posts]
 
@@ -46,7 +45,6 @@ def create_image():
         db.session.add(post)
         db.session.commit()
         return jsonify(post.to_dict())
-    print(form.errors)
 
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
@@ -73,11 +71,9 @@ def edit_image(postId):
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        print('\n\n', userId, post.userId, '\n\n')
         if int(userId) != int(post.userId):
             return jsonify('Invalid Request'), 401
         else:
-            print('\n\nequal\n\n')
             post.title = form['title'].data
             db.session.commit()
             return jsonify(post.to_dict())
