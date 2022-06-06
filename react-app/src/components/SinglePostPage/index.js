@@ -85,7 +85,7 @@ export default function SinglePostPage() {
             </div>
             <div id='post-information'>
                 <div id='post-user-profile-image-div'>
-                    <img src={post?.user?.profileImageUrl === '/default-profile-image.png' ? defaultProfileImage : post.user.profileImageUrl} alt='user' id='user-profile-image'/>
+                    <img src={post?.user?.profileImageUrl === '/default-profile-image.png' ? defaultProfileImage : post?.user?.profileImageUrl} alt='user' id='user-profile-image'/>
                 </div>
                 <div id='post-information-text'>
                     {editPost ?
@@ -101,7 +101,7 @@ export default function SinglePostPage() {
                             {post?.title}
                         </h1>
                     }
-                    <h1>&nbsp;by {post.user?.username}
+                    <h1>&nbsp;by {post?.user?.username}
                         {/* <Link to={`/users/${post.user.id}`} id='user-link'>{post.user?.username}</Link> */}
                     </h1>
                 </div>
