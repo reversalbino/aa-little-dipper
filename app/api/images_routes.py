@@ -7,11 +7,13 @@ from sqlalchemy import desc
 images_routes = Blueprint('images', __name__)
 
 # GET ALL IMAGES
-@images_routes.route('/')
-def get_images():
+@images_routes.route('/page/<int:page>/')
+def get_images(page):
     posts = Post.query.order_by(desc(Post.createdAt)).all()
-
     posts = [post.to_dict_lite() for post in posts]
+
+    # posts = Post.query.order_by(desc(Post.createdAt)).paginate(page=page, per_page=20, error_out=False)
+    # posts = [post.to_dict_lite() for post in posts.items]
 
     return jsonify(posts)
 

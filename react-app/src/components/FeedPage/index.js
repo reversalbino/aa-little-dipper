@@ -10,8 +10,10 @@ import './FeedPage.css';
 export default function FeedPage() {
     const dispatch = useDispatch();
     let images = useSelector(state => Object.values(state.images).filter(image => 'id' in image));
+    // console.log('FeedPage ~ images', images);
 
     const [isLoaded, setIsLoaded] = useState(false);
+    // const [nextImages, setNextImages] = useState(2);
 
     useEffect(() => {
         (async () => {
@@ -19,6 +21,22 @@ export default function FeedPage() {
             setIsLoaded(true);
         })()
     }, []);
+
+    // useEffect(() => {
+    //     const scrolling_function = async () => {
+    //         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight + 100) {
+    //             window.removeEventListener('scroll', scrolling_function);
+    //             await dispatch(imageActions.getImages(nextImages));
+    //             setNextImages(prev => prev + 1);
+    //         }
+    //     }
+
+    //     window.addEventListener('scroll', scrolling_function);
+
+    //     return () => {
+    //         window.removeEventListener('scroll', scrolling_function);
+    //     }
+    // }, [nextImages]);
 
     return !isLoaded ?
         <LoadingAnimation />

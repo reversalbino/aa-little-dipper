@@ -74,22 +74,28 @@ const deleteTag = (tagToDelete) => ({
     payload: tagToDelete
 });
 
+export const getImages = (page = 1) => async (dispatch) => {
+
+    console.log(`getting all images`)
+
+    const data = await fetch(`/api/images/page/${page}/`);
+
+    if(data.ok) {
+        const response = await data.json();
+        dispatch(loadImages(response))
+    }
+}
+
 export const getImage = (id) => async (dispatch) => {
+
+    console.log(`getting image ${id}`)
+
     const data = await fetch(`/api/images/${id}/`);
 
     if(data.ok) {
         const response = await data.json();
         dispatch(loadImage(response));
         return response;
-    }
-}
-
-export const getImages = () => async (dispatch) => {
-    const data = await fetch('/api/images/');
-
-    if(data.ok) {
-        const response = await data.json();
-        dispatch(loadImages(response))
     }
 }
 
@@ -236,6 +242,7 @@ export default function imagesReducer(state = {}, action) {
             const newState = { ...state };
 
             newState[action.payload.id] = action.payload;
+            // console.log('imagesReducer ~ action.payload', action.payload);
 
             const newComments = {};
             for(let comment of action.payload.comments) {
@@ -253,13 +260,11 @@ export default function imagesReducer(state = {}, action) {
             return newState;
         }
         case LOAD_IMAGES: {
-            const state = { };
+            const newState = { ...state };
 
             for(let i = 0; i < action.payload.length; i++) {
-                state[action.payload[i].id] = action.payload[i];
+                newState[action.payload[i].id] = action.payload[i];
             }
-
-            let newState = { ...state }
 
             return newState;
         }
