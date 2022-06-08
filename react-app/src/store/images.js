@@ -10,6 +10,9 @@ const ADD_COMMENT = 'images/ADD_COMMENT';
 const DELETE_COMMENT = 'images/DELETE_COMMENT';
 const EDIT_COMMENT = 'images/EDIT_COMMENT';
 
+const ADD_TAG = 'images/ADD_TAG';
+const DELETE_TAG = 'images/DELETE_TAG';
+
 // Images
 
 const loadImage = (image) => ({
@@ -59,22 +62,40 @@ const editComment = (editedComment) => ({
     payload: editedComment
 });
 
+//Tags
+
+const createTag = (postIdAndTag) => ({
+    type: ADD_TAG,
+    payload: postIdAndTag
+});
+
+const deleteTag = (tagToDelete) => ({
+    type: DELETE_TAG,
+    payload: tagToDelete
+});
+
+export const getImages = (page = 1) => async (dispatch) => {
+
+    console.log(`getting all images`)
+
+    const data = await fetch(`/api/images/page/${page}/`);
+
+    if(data.ok) {
+        const response = await data.json();
+        dispatch(loadImages(response))
+    }
+}
+
 export const getImage = (id) => async (dispatch) => {
+
+    console.log(`getting image ${id}`)
+
     const data = await fetch(`/api/images/${id}/`);
 
     if(data.ok) {
         const response = await data.json();
         dispatch(loadImage(response));
         return response;
-    }
-}
-
-export const getImages = () => async (dispatch) => {
-    const data = await fetch('/api/images/');
-
-    if(data.ok) {
-        const response = await data.json();
-        dispatch(loadImages(response))
     }
 }
 
@@ -170,20 +191,71 @@ export const deletePostComment = (comment) => async (dispatch) => {
     }
 }
 
-export default function imagesReducer(state = { images: {} }, action) {
+
+// IMAGE TAGS
+
+export const addTagToPost = (tag, postId) => async (dispatch) => {
+    const data = await fetch(`/api/tags/${+postId}/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({tag})
+    });
+
+    if(data.ok) {
+        const response = await data.json();
+        response.postId = postId
+        dispatch(createTag(response))
+    }
+}
+
+export const deleteTagFromPost = (tag, postId) => async (dispatch) => {
+    const data = await fetch(`/api/tags/${postId}/${tag.id}/`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if(data.ok) {
+        const response = await data.json();
+        dispatch(deleteTag({ response, postId }));
+    }
+}
+
+// SEARCH
+
+export const searchForPosts = (query) => async (dispatch) => {
+    const data = await fetch(`/api/tags/search/${query}/`);
+
+    if(data.ok) {
+        const response = await data.json();
+
+        dispatch(loadImages(response));
+    }
+}
+
+export default function imagesReducer(state = {}, action) {
     switch (action.type) {
         case LOAD_IMAGE: {
             const newState = { ...state };
 
             newState[action.payload.id] = action.payload;
+            // console.log('imagesReducer ~ action.payload', action.payload);
 
             const newComments = {};
-
             for(let comment of action.payload.comments) {
                 newComments[comment.id] = comment
             }
-
             newState[action.payload.id].comments = newComments;
+
+            const tags = {};
+            for(let tag of action.payload.tags) {
+                tags[tag.id] = tag;
+            }
+            newState[action.payload.id].tags = tags;
+
 
             return newState;
         }
@@ -194,12 +266,10 @@ export default function imagesReducer(state = { images: {} }, action) {
                 newState[action.payload[i].id] = action.payload[i];
             }
 
-
             return newState;
         }
         case ADD_IMAGE: {
             const newState = { ...state };
-            // newState.images = { ...state.images };
             newState[action.payload.id] = action.payload;
 
             return newState;
@@ -258,6 +328,34 @@ export default function imagesReducer(state = { images: {} }, action) {
             };
 
             delete newState[action.payload.postId].comments[action.payload.id]
+
+            return newState;
+        }
+        case ADD_TAG: {
+            const newState = {
+                ...state,
+                [action.payload.postId]: {
+                    ...state[action.payload.postId],
+                    tags: {
+                        ...state[action.payload.postId].tags,
+                        [action.payload.id]: action.payload
+                    }
+                }
+            }
+
+            return newState;
+        }
+        case DELETE_TAG: {
+            const newTags = { ...state[action.payload.postId].tags };
+            delete newTags[action.payload.response.id]
+
+            const newState = {
+                ...state,
+                [action.payload.postId]: {
+                    ...state[action.payload.postId],
+                    tags: newTags
+                }
+            }
 
             return newState;
         }
