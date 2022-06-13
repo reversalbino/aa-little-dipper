@@ -84,10 +84,11 @@ To run Little Dipper locally, please follow these steps:
     
   <li>You should now have Little Dipper running locally!</li>
   
-## Future Features
+## Features
 
-  <li>User Page</li>
-  <li>Albums</li>
-  <li>Image Metadata</li>
+  <li>Upload images</li>
+  <li>Comment on images</li>
+  <li>Add tags to images</li>
+  <li>Search images by tags and/or title</li>
   
 # little-dipper-staging
