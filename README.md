@@ -84,8 +84,13 @@ To run Little Dipper locally, please follow these steps:
     
   <li>You should now have Little Dipper running locally!</li>
   
-## Features
+<img width="1777" alt="Screen Shot 2022-06-13 at 2 29 00 PM" src="https://user-images.githubusercontent.com/64238938/173440074-71560e93-6ed8-4688-822f-701cee6ac8bb.png">
+<img width="1773" alt="Screen Shot 2022-06-13 at 2 28 43 PM" src="https://user-images.githubusercontent.com/64238938/173440099-68c4ff3c-6e30-41c1-8a02-2d2242c04be1.png">
+<img width="1784" alt="Screen Shot 2022-06-13 at 2 29 51 PM" src="https://user-images.githubusercontent.com/64238938/173440104-e826c4fa-41ff-44ca-ad96-1371e35c0f2b.png">
+<img width="1760" alt="Screen Shot 2022-06-13 at 2 29 20 PM" src="https://user-images.githubusercontent.com/64238938/173440109-da216acd-523c-4de7-94e2-ba8ea4beee0b.png">
+<img width="1785" alt="Screen Shot 2022-06-13 at 2 29 11 PM" src="https://user-images.githubusercontent.com/64238938/173440112-0e14704a-5b43-410e-86c6-f7b7bfce4be5.png">
 
+## Features
   <li>Upload images</li>
   <li>Comment on images</li>
   <li>Add tags to images</li>
