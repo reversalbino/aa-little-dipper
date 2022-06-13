@@ -19,20 +19,22 @@ const NavBar = () => {
 						<img src={logo} alt='logo' id='logo' />
 					</NavLink>
 				</li>
-			<SearchBar />
 				{sessionUser ?
-					<div id='add-picture-and-logout-buttons'>
-						<p id='hello-user'>Hello, {sessionUser.username}</p>
-						<li>
-							<button id='new-picture-button'>
-								<NavLink to='/pictures/new' >
-									New Post
-								</NavLink>
-							</button>
-						</li>
-						<li>
-							<LogoutButton id='logout-button' />
-						</li>
+					<div id='search-bar-and-buttons'>
+						<SearchBar />
+						<div id='add-picture-and-logout-buttons'>
+							<p id='hello-user'>Hello, {sessionUser.username}</p>
+							<li>
+								<button id='new-picture-button'>
+									<NavLink to='/pictures/new' >
+										New Post
+									</NavLink>
+								</button>
+							</li>
+							<li>
+								<LogoutButton id='logout-button' />
+							</li>
+						</div>
 					</div>
 				:
 					<div id='login-and-signup-buttons'>
