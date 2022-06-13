@@ -65,7 +65,7 @@ def delete_tag(postId, tagId):
 @tags_routes.route('/search/<query>/', methods=['GET'])
 def search(query):
     posts_with_query_in_title = Post.query.filter(Post.title.ilike('%' + query + '%')).all()
-    exact_matches = Tag.query.filter(Tag.tag == query).first()
+    exact_match = Tag.query.filter(Tag.tag == query).first()
     case_insensitive_matches = Tag.query.filter(Tag.tag.ilike(query)).all()
     matches_containing_the_query = Tag.query.filter(Tag.tag.ilike('%' + query + '%')).all()
 
@@ -74,8 +74,8 @@ def search(query):
     if len(posts_with_query_in_title) > 0:
         all_matches += posts_with_query_in_title
 
-    if exact_matches:
-        all_matches += exact_matches.posts
+    if exact_match:
+        all_matches += exact_match.posts
 
     if len(case_insensitive_matches) > 0:
         for tag in case_insensitive_matches:

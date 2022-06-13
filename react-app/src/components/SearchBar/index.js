@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 
 import * as imageActions from '../../store/images';
-
+import './SearchBar.css';
 
 export default function SearchBar() {
     const dispatch = useDispatch();
@@ -25,7 +25,7 @@ export default function SearchBar() {
 	}
 
     return(
-        <form onSubmit={search}>
+        <form id='search-bar' onSubmit={search}>
             <input
                 type='text'
                 value={searchTerm}

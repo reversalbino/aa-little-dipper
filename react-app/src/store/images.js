@@ -231,6 +231,7 @@ export const searchForPosts = (query) => async (dispatch) => {
 
     if(data.ok) {
         const response = await data.json();
+        console.log('searchForPosts ~ response', response);
 
         dispatch(loadImages(response));
     }
@@ -260,7 +261,7 @@ export default function imagesReducer(state = {}, action) {
             return newState;
         }
         case LOAD_IMAGES: {
-            const newState = { ...state };
+            const newState = {};
 
             for(let i = 0; i < action.payload.length; i++) {
                 newState[action.payload[i].id] = action.payload[i];

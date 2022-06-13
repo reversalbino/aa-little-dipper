@@ -29,7 +29,7 @@ nav > ul {
     height: 40px;
     width: 100px;
     font-size: 16px;
-    margin-right: 50px;
+    margin-right: 20px;
     border-radius: 5px;
     border: 1px solid black;
     color: white;
@@ -51,4 +51,12 @@ a {
 #hello-user {
     font-size: 17px;
     margin: 10px;
+}
+
+#search-bar-and-buttons {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
 }
