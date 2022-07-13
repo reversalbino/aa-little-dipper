@@ -9,7 +9,7 @@ import './FeedPage.css';
 
 export default function FeedPage() {
     const dispatch = useDispatch();
-    let images = useSelector(state => Object.values(state.images).filter(image => 'id' in image));
+    let images = useSelector(state => Object.values(state.images).reverse().filter(image => 'id' in image));
     // console.log('FeedPage ~ images', images);
 
     const [isLoaded, setIsLoaded] = useState(false);
