@@ -29,6 +29,8 @@ boto3 = "*"
 requests = "*"
 psycopg2-binary = "*"
 psycopg2 = "*"
+pillow = "*"
+numpy = "*"
 
 [dev-packages]
 psycopg2-binary = "==2.8.6"
