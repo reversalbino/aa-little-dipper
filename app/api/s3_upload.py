@@ -31,3 +31,15 @@ def upload_image():
     url = response['url'] + response['fields']['key']
 
     return jsonify(url)
+
+@s3_routes.route('/delete/', methods=['DELETE'])
+def delete_image_from_bucket(img):
+    file_name = img['postImageUrl'][img['postImageUrl'].rindex('/') + 1:]
+
+    s3_client = boto3.client("s3")
+    response = s3_client.delete_object(
+        Bucket=os.environ.get('AWS_BUCKET_NAME'),
+        Key=file_name
+    )
+
+    print(response)
