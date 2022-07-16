@@ -32,7 +32,7 @@ def upload_image():
 
     return jsonify(url)
 
-#does not work yet
+#deleting images does not work yet
 @s3_routes.route('/delete/', methods=['DELETE'])
 def delete_image_from_bucket(img):
     file_name = img['postImageUrl'][img['postImageUrl'].rindex('/') + 1:]
