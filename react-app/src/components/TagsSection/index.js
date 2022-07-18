@@ -5,7 +5,6 @@ import * as imageActions from '../../store/images';
 import './TagsSection.css';
 
 export default function TagsSection({ tags, postId, sameUser }) {
-    console.log('TagsSection ~ sameUser', sameUser);
     const sessionUser = useSelector(state => state.session.user);
 
     const dispatch = useDispatch();

@@ -75,9 +75,6 @@ const deleteTag = (tagToDelete) => ({
 });
 
 export const getImages = (page = 1) => async (dispatch) => {
-
-    console.log(`getting all images`)
-
     const data = await fetch(`/api/images/page/${page}/`);
 
     if(data.ok) {
@@ -87,9 +84,6 @@ export const getImages = (page = 1) => async (dispatch) => {
 }
 
 export const getImage = (id) => async (dispatch) => {
-
-    console.log(`getting image ${id}`)
-
     const data = await fetch(`/api/images/${id}/`);
 
     if(data.ok) {
@@ -231,8 +225,6 @@ export const searchForPosts = (query) => async (dispatch) => {
 
     if(data.ok) {
         const response = await data.json();
-        console.log('searchForPosts ~ response', response);
-
         dispatch(loadImages(response));
     }
 }

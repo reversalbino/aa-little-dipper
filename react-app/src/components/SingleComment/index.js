@@ -6,7 +6,6 @@ import defaultProfileImage from '../../static/default-profile-image.png';
 import './SingleComment.css'
 
 export default function SingleComment({ comment }) {
-    console.log('SingleComment ~ comment', comment);
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
 

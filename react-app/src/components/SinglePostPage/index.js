@@ -18,7 +18,6 @@ export default function SinglePostPage() {
     const { id } = useParams();
 
     const post = useSelector(state => state?.images[+id]);
-    console.log('SinglePostPage ~ post', post);
     const sessionUser = useSelector(state => state.session.user);
 
     const [isLoaded, setIsLoaded] = useState(false);
